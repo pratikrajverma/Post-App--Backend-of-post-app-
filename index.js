@@ -19,7 +19,7 @@ app.use(express.json());
 
 //router loading
 const blog = require("./Routes/blog")
-app.use("/api/v1",blog)
+app.use("/api/v1",blog)       //yaha we are merging two routes and callback function where we define our logic  1./api/v1  2.(route, controller) 
 
  
 
@@ -41,12 +41,6 @@ app.listen(PORT, ()=>{
  
 //database connection 
 connectDb();
-
-
-
-
-
-
 
 
 
