@@ -1,6 +1,6 @@
 const Post = require('../modals/postModal');
 const Like = require('../modals/likeModal');
-const likeModal = require('../modals/likeModal');
+ 
  
 
 const likepost = async(req,res)=>{
