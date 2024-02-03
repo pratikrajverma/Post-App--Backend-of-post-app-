@@ -1,14 +1,29 @@
 const express = require('express');
 const router = express.Router();
 
-//import controller
-const {dummylike} = require('../controller/LikeController')  //yaha {} isliye laga he kyuki hum multiple function ko uske nam se nikal sakte he
+ 
+const {createcomment} = require('../controller/CommentController'); ////yaha {} isliye laga he kyuki hum multiple function ko uske nam se nikal sakte he
+const { createpost,getAllposts } = require('../controller/PostController');
+const { likepost, dislikepost } = require('../controller/LikeController');
+ 
+
+
+
 
 
 //mapping create
-router.get('/dummyrouter',dummylike);
+ 
+router.post('/comments/create', createcomment)
+
+router.post('/post/create', createpost)
+
+router.get('/posts', getAllposts); 
+   
+router.post('/likes/like', likepost)
+
+router.post('/likes/dislike', dislikepost)
+
+ 
 
 
-
-//export router
 module.exports = router;

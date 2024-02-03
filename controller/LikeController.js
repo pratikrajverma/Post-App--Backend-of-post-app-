@@ -1,7 +1,50 @@
+const Post = require('../modals/postModal');
+const Like = require('../modals/likeModal');
+const likeModal = require('../modals/likeModal');
+ 
 
-function dummylike(req,res)
-{
-    res.send('<h1>this is your dummy route ....</h1>');
+const likepost = async(req,res)=>{
+    try{
+        const {post, user} = req.body;
+        const like = new Like({post, user});
+        const saveLike =  await like.save();
+
+        const updatedPost = await Post.findByIdAndUpdate(post, {$push: {likes: saveLike._id}}, {new: true}).populate('likes').exec();
+        
+        res.json({ 
+            post:updatedPost
+        })
+
+    }
+    catch (error) {
+        res.status(400).json({message: error.message});
+    }
 }
 
-module.exports = {dummylike};   // Jab aap ek controller file mein {} ke sath functions ko group karte hain, toh aap ek hi module mein multiple functions aur logic ko define kar sakte hain.  Is approach ka ek aur fayda ye hai ki aapko dusre files mein import karte waqt specific functions ko choose karne mein flexibility milti hai. Aap sirf zaruratmand function ko hi import kar sakte hain, jisse code maintainable aur readable rehta hai.
+
+
+//....................dislikes--------------------
+
+const dislikepost = async(req,res)=>{
+    try{
+        const{post,like} = req.body;
+        //find and delete like document
+
+        const disliked = await Like.findByIdAndDelete({_id: like});
+
+        //find and update post document
+        const updatedPost = await Post.findByIdAndUpdate(post, {$pull: {likes: like}}, {new: true}).populate('likes').exec();
+
+        res.json({  
+            post:updatedPost
+        })
+
+    }
+    catch (error) {
+        res.status(400).json({message: error.message});
+    }
+}
+
+
+
+module.exports = {likepost, dislikepost};
