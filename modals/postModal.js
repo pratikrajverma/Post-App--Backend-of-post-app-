@@ -13,6 +13,7 @@ const postschema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Like' //iska matlab he ki ye id like modal schema ko refer kar rahi he jiska data document ke rup me store he mongodb me
     }],
+    
     comments : [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment' //iska matlab he ki ye id comment modal schema ko refer kar rahi he jiska data document ke rup me store he mongodb me
